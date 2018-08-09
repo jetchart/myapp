@@ -29,7 +29,7 @@ var controller = {
 		});
 	},
   getTool: function(req, res){
-    var idTool = req.body.id;
+    var idTool = req.params.id;
     if(idTool == null) return res.status(404).send({message: 'There is no tool with id: ' + idTool});
     Tool.findById(idTool, (error, tool) => {
       if(error) return res.status(500).send({message: 'Error in getTool: ' + error});
