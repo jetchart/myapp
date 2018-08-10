@@ -28,9 +28,34 @@ var controller = {
 			return res.status(200).send({tool: toolStored});
 		});
 	},
+  updateTool: function(req, res){
+		var idTool = req.params.id;
+		var update = req.body;
+    //Update tool
+		Tool.findByIdAndUpdate(idTool, update, {new:true}, (err, updatedTool) => {
+			if(err) return res.status(500).send({message: 'Error updating tool'});
+			if(!updatedTool) return res.status(404).send({message: 'There is no tool to update'});
+			return res.status(200).send({
+				tool: updatedTool
+			});
+		});
+
+	},
+	removeTool: function(req, res){
+		var idTool = req.params.id;
+    //Remove tool
+		Tool.findByIdAndRemove(idTool, (err, removedTool) => {
+			if(err) return res.status(500).send({message: 'Error removing tool'});
+			if(!removedTool) return res.status(404).send({message: "It is not possible to remove the tool"});
+			return res.status(200).send({
+				tool: removedTool
+			});
+		});
+	},
   getTool: function(req, res){
     var idTool = req.params.id;
     if(idTool == null) return res.status(404).send({message: 'There is no tool with id: ' + idTool});
+    //Get tool
     Tool.findById(idTool, (error, tool) => {
       if(error) return res.status(500).send({message: 'Error in getTool: ' + error});
 		  if(!tool) return res.status(404).send({message: 'There is no tool with id: ' + idTool});

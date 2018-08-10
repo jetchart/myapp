@@ -8,6 +8,7 @@ var app = express();
 // cargar archivos rutas
 var indexRoutes = require('./routes/index');
 var toolRoutes = require('./routes/tool');
+var projectRoutes = require('./routes/project');
 
 // middlewares
 app.use(bodyParser.urlencoded({extended:false}));
@@ -25,7 +26,7 @@ app.use((req, res, next) => {
 // rutas
 app.use('/api', indexRoutes);
 app.use('/api', toolRoutes);
-
+app.use('/api', projectRoutes);
 
 // exportar
 module.exports = app;
