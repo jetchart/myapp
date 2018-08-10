@@ -1,18 +1,17 @@
 'use strict'
 
 var mongoose = require('mongoose');
-var app = require('./app');
-var port = 3700;
+var app = require('./backend/app');
+var config = require('./config');
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/myapp')
-        .then(() => {
-        	console.log("Conexión a la base de datos establecida satisfactoriamente...");
-
-        	// Creacion del servidor
-        	app.listen(port, () => {
-        		console.log("Servidor corriendo correctamente en la url: localhost:3700");
-        	});
-
-        })
-        .catch(err => console.log(err));
+mongoose
+  .connect(config.db.url, { useNewUrlParser: true })
+  .then(() => {
+    console.log("Satisfactory conection to database: " + config.db.url);
+    // Creacion del servidor
+    app.listen(config.application.port, () => {
+      console.log("Server running at port: " + config.application.port);
+    });
+  })
+  .catch(err => console.log(err));
