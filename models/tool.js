@@ -6,8 +6,8 @@ var Schema = mongoose.Schema;
 var ToolSchema = new Schema({
   name: String,
   description: String,
-  creationDate: String,
-  modificationDate: String
+  creationDate: {type:Date, default:Date.now},
+  modificationDate: {type:Date, default:Date.now}
 });
 
 module.exports = mongoose.model('Tool', ToolSchema);

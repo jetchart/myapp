@@ -6,7 +6,7 @@ var Project = require('../models/project');
 var controller = {
 
   getProjects: function(req, res){
-		Project.find({}).populate('tool').sort('-modificationDate').exec((err, projects) => {
+		Project.find({}).populate('tools').sort('-modificationDate').exec((err, projects) => {
 			if(err) return res.status(500).send({message: 'Error in getProjects: ' + err});
 			if(!projects) return res.status(404).send({message: 'There are no projects'});
 			return res.status(200).send({projects});
@@ -21,10 +21,10 @@ var controller = {
 		var params = req.body;
 		project.title = params.title;
     project.description = params.description;
-    project.creationDate = new Date().toString();
-    project.modificationDate = new Date().toString();
+    //project.creationDate = new Date().toString();
+    //project.modificationDate = new Date().toString();
     //project.tool = new ObjectID(params.tool);
-    project.tool = params.tool;
+    project.tools = params.tools;
     //Save project
 		project.save((err, projectStored) => {
 			if(err) return res.status(500).send({message: 'Error in saveProject: ' + err});
@@ -36,6 +36,7 @@ var controller = {
 		var idProject = req.params.id;
 		var update = req.body;
     //Update project
+    update.modificationDate = new Date();
 		Project.findByIdAndUpdate(idProject, update, {new:true}, (err, updatedProject) => {
 			if(err) return res.status(500).send({message: 'Error updating project'});
 			if(!updatedProject) return res.status(404).send({message: 'There is no project to update'});

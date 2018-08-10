@@ -19,8 +19,8 @@ var controller = {
 		var params = req.body;
 		tool.name = params.name;
     tool.description = params.description;
-    tool.creationDate = new Date().toString();
-    tool.modificationDate = new Date().toString();
+    //tool.creationDate = new Date().toString();
+    //tool.modificationDate = new Date().toString();
     //Save tool
 		tool.save((err, toolStored) => {
 			if(err) return res.status(500).send({message: 'Error in saveTool: ' + err});
@@ -32,6 +32,7 @@ var controller = {
 		var idTool = req.params.id;
 		var update = req.body;
     //Update tool
+    update.modificationDate = new Date();
 		Tool.findByIdAndUpdate(idTool, update, {new:true}, (err, updatedTool) => {
 			if(err) return res.status(500).send({message: 'Error updating tool'});
 			if(!updatedTool) return res.status(404).send({message: 'There is no tool to update'});

@@ -6,11 +6,11 @@ var Schema = mongoose.Schema;
 var ProjectSchema = new Schema({
   title: String,
   description: String,
-  creationDate: String,
-  modificationDate: String,
+  creationDate: {type:Date, default:Date.now},
+  modificationDate: {type:Date, default:Date.now},
   //tool: {type: Schema.ObjectId, ref: 'tool' }
   //tool: {type: Schema.ObjectId, ref: 'tool' }
-  tool: { type: Schema.Types.ObjectId, ref: 'Tool' },
+  tools: { type: Schema.Types.ObjectId, ref: 'Tool' },
   //tools: {type: Schema.ObjectId, ref: 'tool' }
 });
 
